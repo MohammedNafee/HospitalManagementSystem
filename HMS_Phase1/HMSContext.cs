@@ -21,6 +21,7 @@ namespace HMS_Phase1
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region patient-relations
+            
             // A patient can have many appointments.
             modelBuilder.Entity<Appointment>()
                 .HasOne(p => p.Patient)
@@ -38,11 +39,13 @@ namespace HMS_Phase1
                 .HasOne(p => p.Patient)
                 .WithMany(x => x.Bills)
                 .HasForeignKey(f => f.PatientId);
+            
             #endregion
 
             ////////////////////////////////////////
 
             #region doctor-relations
+            
             // A doctor can have many appointments.
             modelBuilder.Entity<Appointment>()
                 .HasOne(d => d.Doctor)
@@ -54,26 +57,41 @@ namespace HMS_Phase1
                 .HasOne(d => d.Doctor)
                 .WithMany(p => p.Prescriptions)
                 .HasForeignKey(f => f.DoctorId);
+
             #endregion
 
             ////////////////////////////////////////
 
-            #region prescription-relations
+            #region medication-prescription-relations
 
             // A prescription can have many medications.
-            modelBuilder.Entity<Medication>()
-                .HasOne(p => p.Prescription)
-                .WithMany(m => m.Medications)
-                .HasForeignKey(f => f.PrescriptionId);
+            // A medication can have many prescriptions.
 
-            // A prescription will be for one Patient and doctor.
+            /**
+             * The relationship between Prescription and Medication results in a many-to-many relationship 
+             * because a single prescription can include multiple medications, 
+             * and a single medication can be part of multiple prescriptions. 
+             * This arises from the fact that both Prescription and Medication have a one-to-many relationship with each other from opposite sides.
+             * 
+             */
+
+            modelBuilder.Entity<PrescriptionMedication>()
+                .HasOne(pre => pre.Prescription)
+                .WithMany(med => med.Medications)
+                .HasForeignKey(f => f.PrescriptionId)
+                .OnDelete(DeleteBehavior.Restrict); // Prevents multiple cascade paths
+
+            modelBuilder.Entity<PrescriptionMedication>()
+                .HasOne(med => med.Medication)
+                .WithMany(pre => pre.Prescriptions)
+                .HasForeignKey(f => f.MedicationId)
+                .OnDelete(DeleteBehavior.Restrict); // Prevents multiple cascade paths
+
             #endregion
 
             ////////////////////////////////////////
+            
 
-            #region medication-relations
-
-            #endregion
         }
     }
 }
