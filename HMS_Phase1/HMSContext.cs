@@ -56,7 +56,24 @@ namespace HMS_Phase1
                 .HasForeignKey(f => f.DoctorId);
             #endregion
 
+            ////////////////////////////////////////
 
+            #region prescription-relations
+
+            // A prescription can have many medications.
+            modelBuilder.Entity<Medication>()
+                .HasOne(p => p.Prescription)
+                .WithMany(m => m.Medications)
+                .HasForeignKey(f => f.PrescriptionId);
+
+            // A prescription will be for one Patient and doctor.
+            #endregion
+
+            ////////////////////////////////////////
+
+            #region medication-relations
+
+            #endregion
         }
     }
 }

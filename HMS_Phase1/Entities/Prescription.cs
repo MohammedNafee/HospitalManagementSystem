@@ -10,5 +10,8 @@ namespace HMS_Phase1.Entities
 
         public int DoctorId { get; set; } // Foreign Key
         public Doctor Doctor { get; set; } // Navigation Property
+
+        public List<Medication> Medications { get; set; } = new List<Medication>();
+
     }
 }
