@@ -20,6 +20,7 @@ namespace HMS_Phase1
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region patient-relations
             // A patient can have many appointments.
             modelBuilder.Entity<Appointment>()
                 .HasOne(p => p.Patient)
@@ -37,6 +38,25 @@ namespace HMS_Phase1
                 .HasOne(p => p.Patient)
                 .WithMany(x => x.Bills)
                 .HasForeignKey(f => f.PatientId);
+            #endregion
+
+            ////////////////////////////////////////
+
+            #region doctor-relations
+            // A doctor can have many appointments.
+            modelBuilder.Entity<Appointment>()
+                .HasOne(d => d.Doctor)
+                .WithMany(a => a.Appointments)
+                .HasForeignKey(f => f.DoctorId);
+
+            // A doctor can issue many prescriptions.
+            modelBuilder.Entity<Prescription>()
+                .HasOne(d => d.Doctor)
+                .WithMany(p => p.Prescriptions)
+                .HasForeignKey(f => f.DoctorId);
+            #endregion
+
+
         }
     }
 }

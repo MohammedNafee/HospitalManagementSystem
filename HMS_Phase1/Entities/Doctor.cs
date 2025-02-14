@@ -10,5 +10,9 @@ namespace HMS_Phase1.Entities
         public string ContactNumber { get; set; }
         public string Email { get; set; }
         public string Specialty { get; set; }
+
+        public List<Appointment> Appointments { get; set; } = new List<Appointment>();
+        public List<Prescription> Prescriptions { get; set; } = new List<Prescription>();
+
     }
 }
