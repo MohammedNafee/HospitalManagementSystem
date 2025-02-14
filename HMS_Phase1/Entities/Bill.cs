@@ -13,6 +13,7 @@ namespace HMS_Phase1.Entities
         public Patient Patient { get; set; } // Navigation Property
         
         public int PrescriptionId { get; set; } // Foreign Key
+        public Prescription Prescription { get; set; } // Navigation Property
         public decimal Amount { get; set; } 
         public DateTime BillDate { get; set; }  
         public BillStatus Status { get; set; }

@@ -90,8 +90,17 @@ namespace HMS_Phase1
             #endregion
 
             ////////////////////////////////////////
-            
 
+            #region bill-prescription-relation
+
+            // A bill is associated with one prescription.
+            modelBuilder.Entity<Bill>()
+                .HasOne(pre => pre.Prescription)
+                .WithOne(b => b.Bill)
+                .HasForeignKey<Bill>(f => f.PrescriptionId)
+                .OnDelete(DeleteBehavior.Restrict); // Ensures Bill is deleted when Prescription is deleted
+      
+            #endregion
         }
     }
 }
