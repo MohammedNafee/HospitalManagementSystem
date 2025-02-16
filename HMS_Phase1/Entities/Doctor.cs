@@ -14,5 +14,14 @@ namespace HMS_Phase1.Entities
         public List<Appointment> Appointments { get; set; } = new List<Appointment>();
         public List<Prescription> Prescriptions { get; set; } = new List<Prescription>();
 
+        public Doctor(string name, int age, string gender, string contactNumber, string email, string specialty)
+        {
+            Name = name;
+            Age = age;
+            Gender = gender;
+            ContactNumber = contactNumber;
+            Email = email;
+            Specialty = specialty;
+        }
     }
 }

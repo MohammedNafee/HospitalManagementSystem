@@ -10,6 +10,7 @@ namespace HMS_Phase1
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Prescription> Prescriptions { get; set; }
         public DbSet<Medication> Medications { get; set; }
+        public DbSet<PrescriptionMedication> PrescriptionMedications { get; set; }
         public DbSet<Bill> Bills { get; set; }  
 
         
@@ -34,11 +35,11 @@ namespace HMS_Phase1
                 .WithMany(x =>x.Prescriptions)
                 .HasForeignKey(f => f.PatientId);
 
-            // A patient can have many bills.
-            modelBuilder.Entity<Bill>()
-                .HasOne(p => p.Patient)
-                .WithMany(x => x.Bills)
-                .HasForeignKey(f => f.PatientId);
+           // // A patient can have many bills.
+           // modelBuilder.Entity<Bill>()
+           //     .HasOne(p => p.Patient)
+           //     .WithMany(x => x.Bills)
+           //     .HasForeignKey(f => f.PatientId);
             
             #endregion
 

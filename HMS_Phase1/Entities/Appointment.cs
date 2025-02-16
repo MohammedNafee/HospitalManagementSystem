@@ -18,5 +18,13 @@ namespace HMS_Phase1.Entities
 
         public int DoctorId { get; set; }  // Foreign Key
         public Doctor Doctor { get; set; } // Navigation Property
+
+        public Appointment(DateTime appointmentDate, int patientId, int doctorId)
+        {
+            AppointmentDate = appointmentDate;
+            Status = AppointmentStatus.Scheduled;
+            PatientId = patientId;
+            DoctorId = doctorId;
+        }
     }
 }

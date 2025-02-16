@@ -12,5 +12,14 @@
         public List<Appointment> Appointments { get; set; } = new List<Appointment>();
         public List<Prescription> Prescriptions { get; set; } = new List<Prescription>();
         public List<Bill> Bills { get; set; } = new List<Bill>();
+
+        public Patient(string name, int age, string gender, string contactNumber, string address)
+        {
+            Name = name;
+            Age = age;
+            Gender = gender;
+            ContactNumber = contactNumber;
+            Address = address;
+        }
     }
 }

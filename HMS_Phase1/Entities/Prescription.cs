@@ -15,5 +15,11 @@ namespace HMS_Phase1.Entities
         public List<PrescriptionMedication> Medications { get; set; } = new List<PrescriptionMedication>();
         public Bill Bill { get; set; }
 
+        public Prescription(DateTime prescriptionDate, int patientId, int doctorId)
+        {
+            PrescriptionDate = prescriptionDate;
+            PatientId = patientId;
+            DoctorId = doctorId;
+        }
     }
 }

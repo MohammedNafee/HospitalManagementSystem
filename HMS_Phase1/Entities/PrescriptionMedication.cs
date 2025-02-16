@@ -11,5 +11,11 @@ namespace HMS_Phase1.Entities
 
         public int PrescriptionId { get; set; }
         public Prescription Prescription { get; set; }
+
+        public PrescriptionMedication(int prescriptionId, int medicationId)
+        {
+            PrescriptionId = prescriptionId;
+            MedicationId = medicationId;
+        }
     }
 }
