@@ -17,5 +17,12 @@ namespace HMS_Phase1.Entities
             PrescriptionId = prescriptionId;
             MedicationId = medicationId;
         }
+
+        public override string ToString()
+        {
+            return $"- Prescription Medication =>\n" +
+                   $"   * Prescription ID: {PrescriptionId} \n" +
+                   $"   * Medication ID: {MedicationId}";
+        }
     }
 }

@@ -5,12 +5,15 @@ namespace HMS_Phase1.Management_Classes
 {
     public class DoctorManager : Manager
     {
-        public override void TrackOptions(int DoctorOption)
+        public override void TrackOptions(string option)
         {
-            switch (DoctorOption)
+            switch (option)
             {
-                case 1:
+                case "1":
                     AddDoctor();
+                    break;
+                case "2":
+                    ViewDoctors(); 
                     break;
                 default:
                     break;
@@ -20,6 +23,8 @@ namespace HMS_Phase1.Management_Classes
         private void AddDoctor()
         {
             Console.WriteLine("********   Adding Doctor Details   ********");
+
+            Console.WriteLine();
 
             Console.WriteLine("Enter Doctor Name: ");
             string DoctorName = Console.ReadLine();
@@ -45,7 +50,34 @@ namespace HMS_Phase1.Management_Classes
             
             context.SaveChanges();
 
+            Console.WriteLine();
+
             Console.WriteLine("Doctor added Successfully!");
+        }
+
+        private void ViewDoctors()
+        {
+            Console.WriteLine("********   Doctors List   ********");
+            Console.WriteLine();
+
+            var doctorsList = context.Doctors.ToList();
+
+            if (doctorsList == null)
+            {
+                Console.WriteLine("No doctors available.");
+                return;
+            }
+
+            foreach (var doctor in doctorsList)
+            {
+                Console.WriteLine(doctor);
+            
+                Console.WriteLine();
+            
+            }
+             
+            Console.WriteLine("********   End of List   ********");
+            Console.WriteLine();
         }
     }
 }

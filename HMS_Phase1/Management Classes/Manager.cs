@@ -5,7 +5,7 @@ namespace HMS_Phase1.Management_Classes
     {
         protected HMSContext context = new HMSContext();
 
-        public abstract void TrackOptions(int option);
+        public abstract void TrackOptions(string option);
 
     }
 }

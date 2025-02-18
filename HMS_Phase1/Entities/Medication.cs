@@ -1,4 +1,7 @@
 ﻿
+using Azure;
+using System.Reflection;
+
 namespace HMS_Phase1.Entities
 {
     public class Medication
@@ -19,7 +22,10 @@ namespace HMS_Phase1.Entities
 
         public override string ToString()
         {
-            return $"{MedicationId}, {Name}, {Quantity}, {Price}";
+            return $"- Medication {MedicationId} => \n" +
+                   $"   * Name: {Name} \n" +
+                   $"   * Quantity: {Quantity} \n" +
+                   $"   * Price: {Price}";
         }
     }
 }

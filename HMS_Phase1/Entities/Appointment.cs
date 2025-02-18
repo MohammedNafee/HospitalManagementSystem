@@ -1,4 +1,7 @@
 ﻿
+using Azure;
+using System.Reflection;
+
 namespace HMS_Phase1.Entities
 {
     public enum AppointmentStatus
@@ -25,6 +28,15 @@ namespace HMS_Phase1.Entities
             Status = AppointmentStatus.Scheduled;
             PatientId = patientId;
             DoctorId = doctorId;
+        }
+
+        public override string ToString()
+        {
+            return $"- Appointment {AppointmentId} => \n" +
+                    $"   * Appointment Date: {AppointmentDate} \n" +
+                    $"   * Status: {Status} \n" +
+                    $"   * Patient ID: {PatientId} \n" +
+                    $"   * Doctor ID: {DoctorId}";
         }
     }
 }

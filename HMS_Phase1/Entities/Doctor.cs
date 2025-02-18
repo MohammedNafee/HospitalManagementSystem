@@ -23,5 +23,16 @@ namespace HMS_Phase1.Entities
             Email = email;
             Specialty = specialty;
         }
+
+        public override string ToString()
+        {
+            return $"- Doctor {DoctorId} => \n" +
+                   $"   * Name: {Name} \n" +
+                   $"   * Age: {Age} \n" +
+                   $"   * Gender: {Gender} \n" +
+                   $"   * Contact Number: {ContactNumber} \n" +
+                   $"   * Email: {Email} \n" +
+                   $"   * Specialty: {Specialty}";
+        }
     }
 }

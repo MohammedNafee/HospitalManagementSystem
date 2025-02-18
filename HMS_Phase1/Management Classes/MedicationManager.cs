@@ -5,14 +5,14 @@ namespace HMS_Phase1.Management_Classes
 {
     public class MedicationManager : Manager
     {
-        public override void TrackOptions(int MedicationOption)
+        public override void TrackOptions(string option)
         {
-            switch (MedicationOption)
+            switch (option)
             {
-                case 1:
+                case "1":
                     AddMedication();
                     break;
-                case 2:
+                case "2":
                     ViewMedications();
                     break;
                 default:
@@ -44,14 +44,27 @@ namespace HMS_Phase1.Management_Classes
 
         private void ViewMedications()
         {
-            var medicationResult = context.Medications.ToList();
-
             Console.WriteLine("********   Medications List   ********");
+            Console.WriteLine();
 
-            foreach (var medication in medicationResult)
+            var medicationsResult = context.Medications.ToList();
+
+            if (medicationsResult == null)
+            {
+                Console.WriteLine("No medications available.");
+                return;
+            }
+
+
+            foreach (var medication in medicationsResult)
             {
                 Console.WriteLine(medication);
+
+                Console.WriteLine(); 
             }
+
+            Console.WriteLine("********   End of List   ********");
+            Console.WriteLine();
         }
     }
 }

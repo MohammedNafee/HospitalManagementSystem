@@ -7,14 +7,14 @@ namespace HMS_Phase1.Management_Classes
     public class PrescriptionManager : Manager
     {
         public event EventHandler<PrescriptionEventArgs> GenerateBill;
-        public override void TrackOptions(int option)
+        public override void TrackOptions(string option)
         {
             switch (option)
             {
-                case 1:
+                case "1":
                     IssuePrescription();
                     break;
-                case 2:
+                case "2":
                     ViewPrescriptions();
                     break;
                 default:
@@ -61,14 +61,26 @@ namespace HMS_Phase1.Management_Classes
 
         private void ViewPrescriptions()
         {
-            var prescriptionResult = context.Prescriptions.ToList();
-
             Console.WriteLine("********   Prescriptions List   ********");
+            Console.WriteLine();
 
-            foreach (var prescription in prescriptionResult)
+            var prescriptionsResult = context.Prescriptions.ToList();
+
+            if (prescriptionsResult == null)
+            {
+                Console.WriteLine("No prescriptions available.");
+                return;
+            }
+
+            foreach (var prescription in prescriptionsResult)
             {
                 Console.WriteLine(prescription);
+
+                Console.WriteLine();
             }
+
+            Console.WriteLine("********   End of List   ********");
+            Console.WriteLine();
         }
     }
 }

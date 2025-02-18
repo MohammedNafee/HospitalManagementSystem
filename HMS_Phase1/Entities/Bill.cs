@@ -1,4 +1,7 @@
 ﻿
+using Azure;
+using System.Reflection;
+
 namespace HMS_Phase1.Entities
 {
     public enum BillStatus
@@ -25,7 +28,11 @@ namespace HMS_Phase1.Entities
 
         public override string ToString()
         {
-            return $"Bill => ID: {BillId}, Date: {BillDate}, Total amount: {Amount}, Status: {Status}";
+            return $"- Bill {BillId} => \n" +
+                   $"   * Prescription ID: {PrescriptionId} \n" +
+                   $"   * Amount: {Amount} \n" +
+                   $"   * Bill Date: {BillDate} \n" +
+                   $"   * Status: {Status}";
         }
     }
 }

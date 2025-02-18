@@ -5,11 +5,11 @@ namespace HMS_Phase1.Management_Classes
     public class BillingManager : Manager
     {
 
-        public override void TrackOptions(int option)
+        public override void TrackOptions(string option)
         {
             switch (option)
             {
-                case 1:
+                case "1":
                     ViewBills();
                     break;
                 default:
@@ -44,13 +44,25 @@ namespace HMS_Phase1.Management_Classes
         private void ViewBills()
         {
             Console.WriteLine("********   Bills List   ********");
+            Console.WriteLine();    
 
-            var BillsResult = context.Bills.ToList();
+            var billsResult = context.Bills.ToList();
 
-            foreach (var bill in BillsResult)
+            if (billsResult == null)
+            {
+                Console.WriteLine("No bills available.");
+                return;
+            }
+
+            foreach (var bill in billsResult)
             {
                 Console.WriteLine(bill);
+
+                Console.WriteLine();    
             }
+
+            Console.WriteLine("********   End of List   ********");
+            Console.WriteLine();
         }
 
     }

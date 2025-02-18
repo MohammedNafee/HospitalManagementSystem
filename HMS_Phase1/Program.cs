@@ -1,4 +1,5 @@
-﻿using HMS_Phase1.Management_Classes;
+﻿using HMS_Phase1.Entities;
+using HMS_Phase1.Management_Classes;
 
 namespace HMS_Phase1
 {
@@ -21,78 +22,102 @@ namespace HMS_Phase1
             {
                 Console.WriteLine("========   Main Menu   ========");
 
-                Console.WriteLine("\r");
+                Console.WriteLine();
 
-                Console.WriteLine("Enter the option number: ");
+                Console.WriteLine("1. Patient Management");
+                Console.WriteLine("2. Doctor Management");
+                Console.WriteLine("3. Appointment Management");
+                Console.WriteLine("4. Medication Management");
+                Console.WriteLine("5. Prescription Management");
+                Console.WriteLine("6. Billing Management");
+                Console.WriteLine("7. Exit");
 
-                Console.WriteLine(
-                    $"1. Patient Management\r\n" +
-                    $"2. Doctor Management\r\n" +
-                    $"3. Appointment Management\r\n" +
-                    $"4. Medication Management\r\n" +
-                    $"5. Prescription Management\r\n" +
-                    $"6. Billing Management\r\n" +
-                    $"7. Exit"
-                );
+                Console.WriteLine();
+                Console.WriteLine("Enter your choice: ");
+                string option = Console.ReadLine();
 
-                int Option = int.Parse(Console.ReadLine());
-
-                Console.WriteLine("\r");
                 Console.WriteLine("========   Second Menu   ========");
 
-                switch (Option)
+                Console.WriteLine();
+
+                switch (option)
                 {
-                    case 1:
-                        Console.WriteLine(
-                            $"1- Add Patient\r\n" +
-                            $"2- View Patients\r\n" +
-                            $"3- Update Patient\r\n" +
-                            $"4- Delete Patient\r\n"
-                        );
+                    case "1":
+                        Console.WriteLine("1- Add Patient");
+                        Console.WriteLine("2- View Patients");
+                        Console.WriteLine("3- Update Patient");
+                        Console.WriteLine("4- Delete Patient");
 
-                        patientManager.TrackOptions(int.Parse(Console.ReadLine()));
-                        break;
+                        Console.WriteLine();
 
-                    case 2:
-                        Console.WriteLine(
-                            $"1- Add Doctor\r\n" +
-                            $"2- View Doctors\r\n" +
-                            $"3- Update Doctor\r\n" +
-                            $"4- Delete Doctor\r\n"
-                        );
-                        doctorManager.TrackOptions(int.Parse(Console.ReadLine()));
+                        Console.WriteLine("Enter your choice: ");
+                        
+                        patientManager.TrackOptions(Console.ReadLine());
+                        
                         break;
 
-                    case 3:
-                        Console.WriteLine(
-                            $"1- Schedule Appointment\r\n" +
-                            $"2- View Appointments\r\n" +
-                            $"3- Cancel Appointment\r\n"
-                        );
-                        appointmentManager.TrackOptions(int.Parse(Console.ReadLine()));
+                    case "2":
+                        Console.WriteLine("1- Add Doctor");
+                        Console.WriteLine("2- View Doctors");
+                        Console.WriteLine("3- Update Doctor");
+                        Console.WriteLine("4- Delete Doctor");
+
+                        Console.WriteLine();
+
+                        Console.WriteLine("Enter your choice: ");
+
+                        doctorManager.TrackOptions(Console.ReadLine());
+                        
                         break;
 
-                    case 4:
-                        Console.WriteLine(
-                            $"1- Add Medication\r\n" +
-                            $"2- View Medications\r\n"
-                        );
-                        medicationManager.TrackOptions(int.Parse(Console.ReadLine()));
+                    case "3":
+                        Console.WriteLine("1- Schedule Appointment");
+                        Console.WriteLine("2- View Appointments");
+                        Console.WriteLine("3- Cancel Appointment");
+
+                        Console.WriteLine();
+
+                        Console.WriteLine("Enter your choice: ");
+
+                        appointmentManager.TrackOptions(Console.ReadLine());
+                        
                         break;
 
-                    case 5:
-                        Console.WriteLine(
-                            $"1- Issue Prescription\r\n" +
-                            $"2- View Prescriptions\r\n"
-                        );
-                        prescriptionManager.TrackOptions(int.Parse(Console.ReadLine()));
+                    case "4":
+                        Console.WriteLine("1- Add Medication");
+                        Console.WriteLine("2- View Medications");
+
+                        Console.WriteLine();
+
+                        Console.WriteLine("Enter your choice: ");
+
+                        medicationManager.TrackOptions(Console.ReadLine());
+
                         break;
-                    case 6:
-                        Console.WriteLine(
-                            $"1- View Bills\r\n"
-                        );
-                        billingManager.TrackOptions(int.Parse(Console.ReadLine()));
+
+                    case "5":
+                        Console.WriteLine("1- Issue Prescription");
+                        Console.WriteLine("2- View Prescriptions");
+
+                        Console.WriteLine();
+
+                        Console.WriteLine("Enter your choice: ");
+
+                        prescriptionManager.TrackOptions(Console.ReadLine());
+                        
                         break;
+
+                    case "6":
+                        Console.WriteLine("1- View Bills");
+
+                        Console.WriteLine();
+
+                        Console.WriteLine("Enter your choice: ");
+
+                        billingManager.TrackOptions(Console.ReadLine());
+                        
+                        break;
+
                     default:
                         Console.WriteLine("Exiting the application...");
                         Environment.Exit(0); // Terminate the application

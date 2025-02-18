@@ -1,4 +1,7 @@
 ﻿
+using Azure;
+using System.Reflection;
+
 namespace HMS_Phase1.Entities
 {
     public class Prescription
@@ -20,6 +23,14 @@ namespace HMS_Phase1.Entities
             PrescriptionDate = prescriptionDate;
             PatientId = patientId;
             DoctorId = doctorId;
+        }
+
+        public override string ToString()
+        {
+           return $"- Prescription {PrescriptionId} => \n" +
+                  $"   * Prescription Date: {PrescriptionDate} \n" +
+                  $"   * Patient ID: {PatientId} \n" +
+                  $"   * Doctor ID: {DoctorId}";
         }
     }
 }

@@ -21,5 +21,15 @@
             ContactNumber = contactNumber;
             Address = address;
         }
+
+        public override string ToString()
+        {
+            return $"- Patient {PatientId} => \n" +
+                   $"   * Name: {Name} \n" +
+                   $"   * Age: {Age} \n" +
+                   $"   * Gender: {Gender} \n" +
+                   $"   * Contact Number: {ContactNumber} \n" +
+                   $"   * Address: {Address}";  
+        }
     }
 }

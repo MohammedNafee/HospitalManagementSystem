@@ -5,12 +5,15 @@ namespace HMS_Phase1.Management_Classes
 {
     public class AppointmentManager : Manager
     {
-        public override void TrackOptions(int AppointmentOption)
+        public override void TrackOptions(string option)
         {
-            switch (AppointmentOption)
+            switch (option)
             {
-                case 1:
+                case "1":
                     ScheduleAppointment();
+                    break;
+                case "2":
+                    ViewAppointments();
                     break;
                 default:
                     break;
@@ -36,6 +39,30 @@ namespace HMS_Phase1.Management_Classes
             context.SaveChanges();
 
             Console.WriteLine("Appointment Scheduled Successfully!");
+        }
+
+        private void ViewAppointments()
+        {
+            Console.WriteLine("********   Appointments List   ********");
+            Console.WriteLine();
+
+            var appointmentsList = context.Appointments.ToList();
+
+            if (appointmentsList == null)
+            {
+                Console.WriteLine("No appointments availabe.");
+                return;
+            }
+
+            foreach (var appointment in appointmentsList)
+            {
+                Console.WriteLine(appointment);
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("********   End of List   ********");
+            Console.WriteLine();
         }
     }
 }

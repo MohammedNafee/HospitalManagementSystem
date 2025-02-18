@@ -27,37 +27,36 @@ namespace HMS_Phase1
             modelBuilder.Entity<Appointment>()
                 .HasOne(p => p.Patient)
                 .WithMany(x => x.Appointments)
-                .HasForeignKey(f => f.PatientId);
+                .HasForeignKey(f => f.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // A patient can have many prescriptions.
             modelBuilder.Entity<Prescription>()
                 .HasOne(p => p.Patient)
                 .WithMany(x =>x.Prescriptions)
-                .HasForeignKey(f => f.PatientId);
+                .HasForeignKey(f => f.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-           // // A patient can have many bills.
-           // modelBuilder.Entity<Bill>()
-           //     .HasOne(p => p.Patient)
-           //     .WithMany(x => x.Bills)
-           //     .HasForeignKey(f => f.PatientId);
-            
+
             #endregion
 
             ////////////////////////////////////////
 
             #region doctor-relations
-            
+
             // A doctor can have many appointments.
             modelBuilder.Entity<Appointment>()
                 .HasOne(d => d.Doctor)
                 .WithMany(a => a.Appointments)
-                .HasForeignKey(f => f.DoctorId);
+                .HasForeignKey(f => f.DoctorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // A doctor can issue many prescriptions.
             modelBuilder.Entity<Prescription>()
                 .HasOne(d => d.Doctor)
                 .WithMany(p => p.Prescriptions)
-                .HasForeignKey(f => f.DoctorId);
+                .HasForeignKey(f => f.DoctorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             #endregion
 
@@ -99,8 +98,7 @@ namespace HMS_Phase1
                 .HasOne(pre => pre.Prescription)
                 .WithOne(b => b.Bill)
                 .HasForeignKey<Bill>(f => f.PrescriptionId)
-                .OnDelete(DeleteBehavior.Restrict); // Ensures Bill is deleted when Prescription is deleted
-      
+                .OnDelete(DeleteBehavior.SetNull); 
             #endregion
         }
     }
