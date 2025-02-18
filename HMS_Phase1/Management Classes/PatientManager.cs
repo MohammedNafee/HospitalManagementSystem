@@ -1,12 +1,11 @@
 ﻿using HMS_Phase1.Entities;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace HMS_Phase1.Management_Classes
 {
     public class PatientManager : Manager
     {
 
-        public override void TrackOptions(string option)
+        internal override void TrackOptions(string option)
         {
             switch (option)
             {
@@ -20,21 +19,16 @@ namespace HMS_Phase1.Management_Classes
                 case "2":
                     Console.WriteLine();
 
-                    ViewPatients();
+                    View();
 
                     Console.WriteLine();
                     break;
                 case "3":
                     Console.WriteLine();
-
-                    Console.WriteLine("Enter Patient ID: ");
-                    int patientId = int.Parse(Console.ReadLine());
-                    
-                    UpdatePatient(patientId);
+                    UpdatePatient(ValidateInput());
 
                     Console.WriteLine();
                     break;
-
                 case "4":
                     Console.WriteLine();
 
@@ -81,7 +75,7 @@ namespace HMS_Phase1.Management_Classes
             Console.WriteLine("Patient added Successfully!");
         }
 
-        private void ViewPatients()
+        protected override void View()
         {
             Console.WriteLine("********   Patients List   ********");
             Console.WriteLine();    

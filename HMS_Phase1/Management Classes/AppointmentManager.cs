@@ -1,12 +1,10 @@
-﻿
-using System.Threading.Channels;
-using HMS_Phase1.Entities;
+﻿using HMS_Phase1.Entities;
 
 namespace HMS_Phase1.Management_Classes
 {
     public class AppointmentManager : Manager
     {
-        public override void TrackOptions(string option)
+        internal override void TrackOptions(string option)
         {
             switch (option)
             {
@@ -14,29 +12,13 @@ namespace HMS_Phase1.Management_Classes
                     ScheduleAppointment();
                     break;
                 case "2":
-                    ViewAppointments();
+                    View();
                     break;
                 case "3":
-                    while(true)
-                    {
-                        Console.WriteLine("Enter Appointment ID: ");
+                    Console.WriteLine();
+                    CancelAppointment(ValidateInput());
 
-                        // Using int.TryParse() instead of int.Parse()
-                        // to avoid exceptions if the user enters a non-numeric value.
-                        // int.TryParse() safely attempts to convert the input to an integer
-                        // and returns true if successful.
-                        if (int.TryParse(Console.ReadLine(), out int appointmentId))
-                        {
-                            CancelAppointment(appointmentId);
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid Input! Please enter a valid numeric ID.");
-                            Console.WriteLine();
-
-                        }
-                    }
+                    Console.WriteLine();
                     break;
                 default:
                     break;
@@ -64,7 +46,7 @@ namespace HMS_Phase1.Management_Classes
             Console.WriteLine("Appointment Scheduled Successfully!");
         }
 
-        private void ViewAppointments()
+        protected override void View()
         {
             Console.WriteLine("********   Appointments List   ********");
             Console.WriteLine();

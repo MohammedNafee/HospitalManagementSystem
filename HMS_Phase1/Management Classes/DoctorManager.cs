@@ -5,16 +5,28 @@ namespace HMS_Phase1.Management_Classes
 {
     public class DoctorManager : Manager
     {
-        public override void TrackOptions(string option)
+        internal override void TrackOptions(string option)
         {
             switch (option)
             {
                 case "1":
+                    Console.WriteLine();
                     AddDoctor();
+
+                    Console.WriteLine();
                     break;
                 case "2":
-                    ViewDoctors(); 
+                    Console.WriteLine();
+                    View();
+
+                    Console.WriteLine();
                     break;
+                case "3":
+                    Console.WriteLine();
+                    UpdateDoctor(ValidateInput());
+
+                    Console.WriteLine();    
+                    break;  
                 default:
                     break;
             }
@@ -55,7 +67,7 @@ namespace HMS_Phase1.Management_Classes
             Console.WriteLine("Doctor added Successfully!");
         }
 
-        private void ViewDoctors()
+        protected override void View()
         {
             Console.WriteLine("********   Doctors List   ********");
             Console.WriteLine();
@@ -79,5 +91,94 @@ namespace HMS_Phase1.Management_Classes
             Console.WriteLine("********   End of List   ********");
             Console.WriteLine();
         }
+
+        private void UpdateDoctor(int doctorId)
+        {
+            Console.WriteLine("********   Update Doctor   ********");
+
+            Console.WriteLine();
+
+            var doctor = context.Doctors.SingleOrDefault(p => p.DoctorId == doctorId);
+
+            if (doctor != null)
+            {
+                while (true)
+                {
+                    Console.WriteLine();
+
+                    Console.WriteLine("Select the field you want to update:");
+                    Console.WriteLine("1. Name");
+                    Console.WriteLine("2. Age");
+                    Console.WriteLine("3. Gender");
+                    Console.WriteLine("4. Contact Number");
+                    Console.WriteLine("5. Email");
+                    Console.WriteLine("6. Specialty");
+                    Console.WriteLine("6. Save and Exit");
+
+                    Console.WriteLine();
+
+                    Console.Write("Enter your choice: ");
+                    string input = Console.ReadLine();
+
+                    Console.WriteLine();
+
+                    switch (input)
+                    {
+                        case "1":
+                            Console.Write("Enter new Name: ");
+                            doctor.Name = Console.ReadLine();
+                            break;
+
+                        case "2":
+                            Console.Write("Enter new Age: ");
+                            if (int.TryParse(Console.ReadLine(), out int newAge))
+                            {
+                                doctor.Age = newAge;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Age must be a number.");
+                            }
+                            break;
+
+                        case "3":
+                            Console.Write("Enter new Gender: ");
+                            doctor.Gender = Console.ReadLine();
+                            break;
+
+                        case "4":
+                            Console.Write("Enter new Contact Number: ");
+                            doctor.ContactNumber = Console.ReadLine();
+                            break;
+
+                        case "5":
+                            Console.Write("Enter new Email: ");
+                            doctor.Email = Console.ReadLine();
+                            break;
+
+                        case "6":
+                            Console.Write("Enter new Specialty: ");
+                            doctor.Specialty = Console.ReadLine();
+                            break;
+
+                        case "7":
+                            context.SaveChanges();
+                            Console.WriteLine("Doctor details updated successfully!");
+                            return; // Exit the method
+
+                        default:
+                            Console.WriteLine("Invalid choice. Please select a valid option.");
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Doctor not found!");
+            }
+        }
+
+
+
     }
 }

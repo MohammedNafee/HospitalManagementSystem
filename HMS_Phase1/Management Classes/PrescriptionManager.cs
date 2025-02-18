@@ -7,7 +7,7 @@ namespace HMS_Phase1.Management_Classes
     public class PrescriptionManager : Manager
     {
         public event EventHandler<PrescriptionEventArgs> GenerateBill;
-        public override void TrackOptions(string option)
+        internal override void TrackOptions(string option)
         {
             switch (option)
             {
@@ -15,7 +15,7 @@ namespace HMS_Phase1.Management_Classes
                     IssuePrescription();
                     break;
                 case "2":
-                    ViewPrescriptions();
+                    View();
                     break;
                 default:
                     break;
@@ -59,7 +59,7 @@ namespace HMS_Phase1.Management_Classes
             GenerateBill?.Invoke(this, e);
         }
 
-        private void ViewPrescriptions()
+        protected override void View()
         {
             Console.WriteLine("********   Prescriptions List   ********");
             Console.WriteLine();

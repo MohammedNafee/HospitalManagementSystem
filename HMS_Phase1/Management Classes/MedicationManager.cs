@@ -5,7 +5,7 @@ namespace HMS_Phase1.Management_Classes
 {
     public class MedicationManager : Manager
     {
-        public override void TrackOptions(string option)
+        internal override void TrackOptions(string option)
         {
             switch (option)
             {
@@ -13,7 +13,7 @@ namespace HMS_Phase1.Management_Classes
                     AddMedication();
                     break;
                 case "2":
-                    ViewMedications();
+                    View();
                     break;
                 default:
                     break;
@@ -42,7 +42,7 @@ namespace HMS_Phase1.Management_Classes
             Console.WriteLine("Medication added Successfully!");
         }
 
-        private void ViewMedications()
+        protected override void View()
         {
             Console.WriteLine("********   Medications List   ********");
             Console.WriteLine();

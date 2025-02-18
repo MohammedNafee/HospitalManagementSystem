@@ -5,12 +5,12 @@ namespace HMS_Phase1.Management_Classes
     public class BillingManager : Manager
     {
 
-        public override void TrackOptions(string option)
+        internal override void TrackOptions(string option)
         {
             switch (option)
             {
                 case "1":
-                    ViewBills();
+                    View();
                     break;
                 default:
                     break;
@@ -41,7 +41,7 @@ namespace HMS_Phase1.Management_Classes
 
         }
 
-        private void ViewBills()
+        protected override void View()
         {
             Console.WriteLine("********   Bills List   ********");
             Console.WriteLine();    
