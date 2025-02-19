@@ -4,19 +4,25 @@ namespace HMS_Phase1.Management_Classes
 {
     public class AppointmentManager : Manager
     {
-        internal override void TrackOptions(string option)
+        internal override void TrackOptions(int option)
         {
             switch (option)
             {
-                case "1":
-                    ScheduleAppointment();
-                    break;
-                case "2":
-                    View();
-                    break;
-                case "3":
+                case 1:
                     Console.WriteLine();
-                    CancelAppointment(ValidateInput());
+                    Add();
+
+                    Console.WriteLine();
+                    break;
+                case 2:
+                    Console.WriteLine();    
+                    View();
+
+                    Console.WriteLine();
+                    break;
+                case 3:
+                    Console.WriteLine();
+                    CancelAppointment(ValidateInput("Enter Appointment ID: "));
 
                     Console.WriteLine();
                     break;
@@ -25,18 +31,15 @@ namespace HMS_Phase1.Management_Classes
             }
         }
 
-        private void ScheduleAppointment()
+        protected override void Add()
         {
             Console.WriteLine("********   Adding Appointment Details   ********");
 
-            Console.WriteLine("Enter Patient ID:");
-            int PatientId = int.Parse(Console.ReadLine());
+            int PatientId = ValidateInput("Enter Patient ID: ");
 
-            Console.WriteLine("Enter Doctor ID:");
-            int DoctorId = int.Parse(Console.ReadLine());
+            int DoctorId = ValidateInput("Enter Doctor ID: ");
 
-            Console.WriteLine("Enter Appointment Date: ");
-            DateTime AppointmentDate = DateTime.Parse(Console.ReadLine());
+            DateTime AppointmentDate = ValidateInputDate("Enter Appointment Date: ");
 
             context.Appointments.Add(
                 new Appointment(AppointmentDate, PatientId, DoctorId));

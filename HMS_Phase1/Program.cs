@@ -1,5 +1,4 @@
-﻿using HMS_Phase1.Entities;
-using HMS_Phase1.Management_Classes;
+﻿using HMS_Phase1.Management_Classes;
 
 namespace HMS_Phase1
 {
@@ -33,8 +32,7 @@ namespace HMS_Phase1
                 Console.WriteLine("7. Exit");
 
                 Console.WriteLine();
-                Console.WriteLine("Enter your choice: ");
-                string option = Console.ReadLine();
+                int option = Manager.ValidateInput("Enter your choice: ");
 
                 Console.WriteLine("========   Second Menu   ========");
 
@@ -42,21 +40,19 @@ namespace HMS_Phase1
 
                 switch (option)
                 {
-                    case "1":
+                    case 1:
                         Console.WriteLine("1- Add Patient");
                         Console.WriteLine("2- View Patients");
                         Console.WriteLine("3- Update Patient");
                         Console.WriteLine("4- Delete Patient");
 
                         Console.WriteLine();
-
-                        Console.WriteLine("Enter your choice: ");
                         
-                        patientManager.TrackOptions(Console.ReadLine());
+                        patientManager.TrackOptions(Manager.ValidateInput("Enter your choice: "));
                         
                         break;
 
-                    case "2":
+                    case 2:
                         Console.WriteLine("1- Add Doctor");
                         Console.WriteLine("2- View Doctors");
                         Console.WriteLine("3- Update Doctor");
@@ -64,57 +60,47 @@ namespace HMS_Phase1
 
                         Console.WriteLine();
 
-                        Console.WriteLine("Enter your choice: ");
-
-                        doctorManager.TrackOptions(Console.ReadLine());
+                        doctorManager.TrackOptions(Manager.ValidateInput("Enter your choice: "));
                         
                         break;
 
-                    case "3":
+                    case 3:
                         Console.WriteLine("1- Schedule Appointment");
                         Console.WriteLine("2- View Appointments");
                         Console.WriteLine("3- Cancel Appointment");
 
                         Console.WriteLine();
 
-                        Console.WriteLine("Enter your choice: ");
-
-                        appointmentManager.TrackOptions(Console.ReadLine());
+                        appointmentManager.TrackOptions(Manager.ValidateInput("Enter your choice: "));
                         
                         break;
 
-                    case "4":
+                    case 4:
                         Console.WriteLine("1- Add Medication");
                         Console.WriteLine("2- View Medications");
 
                         Console.WriteLine();
 
-                        Console.WriteLine("Enter your choice: ");
-
-                        medicationManager.TrackOptions(Console.ReadLine());
+                        medicationManager.TrackOptions(Manager.ValidateInput("Enter your choice: "));
 
                         break;
 
-                    case "5":
+                    case 5:
                         Console.WriteLine("1- Issue Prescription");
                         Console.WriteLine("2- View Prescriptions");
 
                         Console.WriteLine();
 
-                        Console.WriteLine("Enter your choice: ");
-
-                        prescriptionManager.TrackOptions(Console.ReadLine());
+                        prescriptionManager.TrackOptions(Manager.ValidateInput("Enter your choice: "));
                         
                         break;
 
-                    case "6":
+                    case 6:
                         Console.WriteLine("1- View Bills");
 
                         Console.WriteLine();
 
-                        Console.WriteLine("Enter your choice: ");
-
-                        billingManager.TrackOptions(Console.ReadLine());
+                        billingManager.TrackOptions(Manager.ValidateInput("Enter your choice: "));
                         
                         break;
 

@@ -5,16 +5,24 @@ namespace HMS_Phase1.Management_Classes
     public class BillingManager : Manager
     {
 
-        internal override void TrackOptions(string option)
+        internal override void TrackOptions(int option)
         {
             switch (option)
             {
-                case "1":
+                case 1:
+                    Console.WriteLine();
                     View();
+
+                    Console.WriteLine();
                     break;
                 default:
                     break;
             }
+        }
+
+        protected override void Add()
+        {
+            throw new NotImplementedException();
         }
         public void OnGenerateBill(object sender, PrescriptionEventArgs e)
         {

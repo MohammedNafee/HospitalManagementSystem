@@ -5,37 +5,31 @@ namespace HMS_Phase1.Management_Classes
     public class PatientManager : Manager
     {
 
-        internal override void TrackOptions(string option)
+        internal override void TrackOptions(int option)
         {
             switch (option)
             {
-                case "1":
+                case 1:
                     Console.WriteLine();
-
-                    AddPatient();
+                    Add();
 
                     Console.WriteLine();
                     break;
-                case "2":
+                case 2:
                     Console.WriteLine();
-
                     View();
 
                     Console.WriteLine();
                     break;
-                case "3":
+                case 3:
                     Console.WriteLine();
-                    UpdatePatient(ValidateInput());
+                    UpdatePatient(ValidateInput("Enter Patient ID: "));
 
                     Console.WriteLine();
                     break;
-                case "4":
+                case 4:
                     Console.WriteLine();
-
-                    Console.WriteLine("Enter Patient ID: ");
-                    int patientID = int.Parse(Console.ReadLine());
-                    
-                    DeletePatient(patientID);
+                    DeletePatient(ValidateInput("Enter Patient ID: "));
 
                     Console.WriteLine();
                     break;
@@ -43,26 +37,21 @@ namespace HMS_Phase1.Management_Classes
                     break;
             }
         }
-        private void AddPatient()
+        protected override void Add()
         {
             Console.WriteLine("********   Adding Patient Details   ********");
 
             Console.WriteLine();    
 
-            Console.WriteLine("Enter Patient Name: ");
-            string PatientName = Console.ReadLine();
+            string PatientName = ValidateInputString("Enter Patient Name: ");
 
-            Console.WriteLine("Enter Patient Age: ");
-            int PatientAge = int.Parse(Console.ReadLine());
+            int PatientAge = ValidateInput("Enter Patient Age: ");
 
-            Console.WriteLine("Enter Patient Gender: ");
-            string PatientGender = Console.ReadLine();
+            string PatientGender = ValidateInputString("Enter Patient Gender: ");
 
-            Console.WriteLine("Enter Patient Contact Number: ");
-            string PatientContactNumber = Console.ReadLine();
-
-            Console.WriteLine("Enter Patient Address");
-            string PatientAddress = Console.ReadLine();
+            string PatientContactNumber = ValidateInputString("Enter Patient Contact Number: ");
+            
+            string PatientAddress = ValidateInputString("Enter Patient Address");
 
             context.Patients.Add(
                 new Patient(PatientName, PatientAge, PatientGender, PatientContactNumber, PatientAddress)
@@ -123,46 +112,28 @@ namespace HMS_Phase1.Management_Classes
 
                     Console.WriteLine();
 
-                    Console.Write("Enter your choice: ");
-                    string input = Console.ReadLine();
+                    int input = ValidateInput("Enter your choice: ");
 
                     Console.WriteLine();
 
                     switch (input)
                     {
-                        case "1":
-                            Console.Write("Enter new Name: ");
-                            patient.Name = Console.ReadLine();
+                        case 1:
+                            patient.Name = ValidateInputString("Enter new Name: ");
                             break;
-
-                        case "2":
-                            Console.Write("Enter new Age: ");
-                            if (int.TryParse(Console.ReadLine(), out int newAge))
-                            {
-                                patient.Age = newAge;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid input. Age must be a number.");
-                            }
+                        case 2:
+                            patient.Age = ValidateInput("Enter new Age: ");
                             break;
-
-                        case "3":
-                            Console.Write("Enter new Gender: ");
-                            patient.Gender = Console.ReadLine();
+                        case 3:
+                            patient.Gender = ValidateInputString("Enter new Gender: ");
                             break;
-
-                        case "4":
-                            Console.Write("Enter new Contact Number: ");
-                            patient.ContactNumber = Console.ReadLine();
+                        case 4:
+                            patient.ContactNumber = ValidateInputString("Enter new Contact Number: ");
                             break;
-
-                        case "5":
-                            Console.Write("Enter new Address: ");
-                            patient.Address = Console.ReadLine();
+                        case 5:
+                            patient.Address = ValidateInputString("Enter new Address: ");
                             break;
-
-                        case "6":
+                        case 6:
                             context.SaveChanges();
                             Console.WriteLine("Patient details updated successfully!");
                             return; // Exit the method
@@ -182,18 +153,43 @@ namespace HMS_Phase1.Management_Classes
         private void DeletePatient(int patientId)
         {
             Console.WriteLine("********   Delete Patient   ********");
-
             Console.WriteLine();
 
             var patient = context.Patients.SingleOrDefault(p => p.PatientId == patientId);
 
+            if (patient == null)
+            {
+                Console.WriteLine("Patient Not Found!");
+                return;
+            }
+
+            // Check for dependencies
+            bool hasAppointments = context.Appointments.Any(a => a.PatientId == patientId);
+            bool hasPrescriptions = context.Prescriptions.Any(p => p.PatientId == patientId);
+            bool hasBills = context.Bills.Any(b => b.Prescription.PatientId == patientId);
+
+            if (hasAppointments || hasPrescriptions || hasBills)
+            {
+                Console.WriteLine("Warning: Deleting this patient will also delete related records due to cascade delete.");
+                Console.WriteLine($" - Appointments: {(hasAppointments ? "Yes" : "No")}");
+                Console.WriteLine($" - Prescriptions: {(hasPrescriptions ? "Yes" : "No")}");
+                Console.WriteLine($" - Bills: {(hasBills ? "Yes" : "No")}");
+
+                string input = ValidateInputString("Are you sure you want to proceed with deletion? (yes/no)");
+                
+                if (input.ToLower() != "yes")
+                {
+                    Console.WriteLine("Deletion canceled.");
+                    return;
+                }
+            }
+
+            // Proceed with deletion
             context.Patients.Remove(patient);
-
             context.SaveChanges();
-            
-            Console.WriteLine();
 
-            Console.WriteLine("Patient deleted Successfully!");
+            Console.WriteLine("Patient deleted successfully, along with related records.");
         }
+
     }
 }

@@ -28,14 +28,14 @@ namespace HMS_Phase1
                 .HasOne(p => p.Patient)
                 .WithMany(x => x.Appointments)
                 .HasForeignKey(f => f.PatientId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             // A patient can have many prescriptions.
             modelBuilder.Entity<Prescription>()
                 .HasOne(p => p.Patient)
                 .WithMany(x =>x.Prescriptions)
                 .HasForeignKey(f => f.PatientId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             #endregion
@@ -49,14 +49,14 @@ namespace HMS_Phase1
                 .HasOne(d => d.Doctor)
                 .WithMany(a => a.Appointments)
                 .HasForeignKey(f => f.DoctorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             // A doctor can issue many prescriptions.
             modelBuilder.Entity<Prescription>()
                 .HasOne(d => d.Doctor)
                 .WithMany(p => p.Prescriptions)
                 .HasForeignKey(f => f.DoctorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             #endregion
 
@@ -79,13 +79,13 @@ namespace HMS_Phase1
                 .HasOne(pre => pre.Prescription)
                 .WithMany(med => med.Medications)
                 .HasForeignKey(f => f.PrescriptionId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevents multiple cascade paths
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<PrescriptionMedication>()
                 .HasOne(med => med.Medication)
                 .WithMany(pre => pre.Prescriptions)
                 .HasForeignKey(f => f.MedicationId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevents multiple cascade paths
+                .OnDelete(DeleteBehavior.Cascade);
 
             #endregion
 
@@ -98,7 +98,7 @@ namespace HMS_Phase1
                 .HasOne(pre => pre.Prescription)
                 .WithOne(b => b.Bill)
                 .HasForeignKey<Bill>(f => f.PrescriptionId)
-                .OnDelete(DeleteBehavior.SetNull); 
+                .OnDelete(DeleteBehavior.Cascade); 
             #endregion
         }
     }

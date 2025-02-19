@@ -5,56 +5,56 @@ namespace HMS_Phase1.Management_Classes
 {
     public class DoctorManager : Manager
     {
-        internal override void TrackOptions(string option)
+        internal override void TrackOptions(int option)
         {
             switch (option)
             {
-                case "1":
+                case 1:
                     Console.WriteLine();
-                    AddDoctor();
+                    Add();
 
                     Console.WriteLine();
                     break;
-                case "2":
+                case 2:
                     Console.WriteLine();
                     View();
 
                     Console.WriteLine();
                     break;
-                case "3":
+                case 3:
                     Console.WriteLine();
-                    UpdateDoctor(ValidateInput());
+                    UpdateDoctor(ValidateInput("Enter doctor ID: "));
 
                     Console.WriteLine();    
-                    break;  
+                    break; 
+                case 4:
+                    Console.WriteLine();
+                    DeleteDoctor(ValidateInput("Enter doctor ID: "));
+
+                    Console.WriteLine();
+                    break;
                 default:
                     break;
             }
         }
 
-        private void AddDoctor()
+        protected override void Add()
         {
             Console.WriteLine("********   Adding Doctor Details   ********");
 
             Console.WriteLine();
 
-            Console.WriteLine("Enter Doctor Name: ");
-            string DoctorName = Console.ReadLine();
+            string DoctorName = ValidateInputString("Enter Doctor Name: ");
 
-            Console.WriteLine("Enter Doctor Age: ");
-            int DoctorAge = int.Parse(Console.ReadLine());
+            int DoctorAge = ValidateInput("Enter Doctor Age: ");
 
-            Console.WriteLine("Enter Doctor Gender: ");
-            string DoctorGender = Console.ReadLine();
+            string DoctorGender = ValidateInputString("Enter Doctor Gender: ");
 
-            Console.WriteLine("Enter Doctor Contact Number: ");
-            string DoctorContactNumber = Console.ReadLine();
+            string DoctorContactNumber = ValidateInputString("Enter Doctor Contact Number: ");
+            
+            string DoctorEmail = ValidateInputString("Enter Doctor Email");
 
-            Console.WriteLine("Enter Doctor Email");
-            string DoctorEmail = Console.ReadLine();
-
-            Console.WriteLine("Enter Doctor Specialty");
-            string DoctorSpecialty = Console.ReadLine();
+            string DoctorSpecialty = ValidateInputString("Enter Doctor Specialty");
 
             context.Doctors.Add(
                 new Doctor(DoctorName, DoctorAge, DoctorGender, DoctorContactNumber, DoctorEmail, DoctorSpecialty)
@@ -117,55 +117,34 @@ namespace HMS_Phase1.Management_Classes
 
                     Console.WriteLine();
 
-                    Console.Write("Enter your choice: ");
-                    string input = Console.ReadLine();
+                    int input = ValidateInput("Enter your choice: ");
 
                     Console.WriteLine();
 
                     switch (input)
                     {
-                        case "1":
-                            Console.Write("Enter new Name: ");
-                            doctor.Name = Console.ReadLine();
+                        case 1:
+                            doctor.Name = ValidateInputString("Enter new Name: ");
                             break;
-
-                        case "2":
-                            Console.Write("Enter new Age: ");
-                            if (int.TryParse(Console.ReadLine(), out int newAge))
-                            {
-                                doctor.Age = newAge;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid input. Age must be a number.");
-                            }
+                        case 2:
+                            doctor.Age = ValidateInput("Enter new Age: ");
                             break;
-
-                        case "3":
-                            Console.Write("Enter new Gender: ");
-                            doctor.Gender = Console.ReadLine();
+                        case 3:
+                            doctor.Gender = ValidateInputString("Enter new Gender: ");
                             break;
-
-                        case "4":
-                            Console.Write("Enter new Contact Number: ");
-                            doctor.ContactNumber = Console.ReadLine();
+                        case 4:
+                            doctor.ContactNumber = ValidateInputString("Enter new Contact Number: ");
                             break;
-
-                        case "5":
-                            Console.Write("Enter new Email: ");
-                            doctor.Email = Console.ReadLine();
+                        case 5:
+                            doctor.Email = ValidateInputString("Enter new Email: ");
                             break;
-
-                        case "6":
-                            Console.Write("Enter new Specialty: ");
-                            doctor.Specialty = Console.ReadLine();
+                        case 6:
+                            doctor.Specialty = ValidateInputString("Enter new Specialty: ");
                             break;
-
-                        case "7":
+                        case 7:
                             context.SaveChanges();
                             Console.WriteLine("Doctor details updated successfully!");
                             return; // Exit the method
-
                         default:
                             Console.WriteLine("Invalid choice. Please select a valid option.");
                             break;
@@ -178,6 +157,44 @@ namespace HMS_Phase1.Management_Classes
             }
         }
 
+        private void DeleteDoctor(int doctorId)
+        {
+            Console.WriteLine("********   Delete Doctor   ********");
+            Console.WriteLine();
+
+            var doctor = context.Doctors.SingleOrDefault(d => d.DoctorId == doctorId);
+
+            if (doctor == null)
+            {
+                Console.WriteLine("Doctor Not Found!");
+                return;
+            }
+
+            // Check for dependencies
+            bool hasAppointments = context.Appointments.Any(a => a.DoctorId == doctorId);
+            bool hasPrescriptions = context.Prescriptions.Any(p => p.DoctorId == doctorId);
+
+            if (hasAppointments || hasPrescriptions)
+            {
+                Console.WriteLine("Warning: Deleting this doctor will also delete related records due to cascade delete.");
+                Console.WriteLine($" - Appointments: {(hasAppointments ? "Yes" : "No")}");
+                Console.WriteLine($" - Prescriptions: {(hasPrescriptions ? "Yes" : "No")}");
+
+                string input = ValidateInputString("Are you sure you want to proceed with deletion? (yes/no)");
+
+                if (input.ToLower() != "yes")
+                {
+                    Console.WriteLine("Deletion canceled.");
+                    return;
+                }
+            }
+
+            // Proceed with deletion
+            context.Doctors.Remove(doctor);
+            context.SaveChanges();
+
+            Console.WriteLine("Doctor deleted successfully, along with related records.");
+        }
 
 
     }

@@ -5,33 +5,36 @@ namespace HMS_Phase1.Management_Classes
 {
     public class MedicationManager : Manager
     {
-        internal override void TrackOptions(string option)
+        internal override void TrackOptions(int option)
         {
             switch (option)
             {
-                case "1":
-                    AddMedication();
+                case 1:
+                    Console.WriteLine();
+                    Add();
+
+                    Console.WriteLine();
                     break;
-                case "2":
+                case 2:
+                    Console.WriteLine();
                     View();
+
+                    Console.WriteLine();
                     break;
                 default:
                     break;
             }
         }
 
-        private void AddMedication()
+        protected override void Add()
         {
             Console.WriteLine("********   Adding Medication Details   ********");
 
-            Console.WriteLine("Medication Name: ");
-            string MedicationName = Console.ReadLine();
+            string MedicationName = ValidateInputString("Medication Name: ");
 
-            Console.WriteLine("Enter Medication Quantity: ");
-            int MedicationQuantity = int.Parse(Console.ReadLine());
+            int MedicationQuantity = ValidateInput("Enter Medication Quantity: ");
 
-            Console.WriteLine("Enter Medication Price: ");
-            decimal MedicationPrice = decimal.Parse(Console.ReadLine());
+            decimal MedicationPrice = ValidateInputDecimal("Enter Medication Price: ");
 
             context.Medications.Add(
                 new Medication(MedicationName, MedicationQuantity, MedicationPrice)
