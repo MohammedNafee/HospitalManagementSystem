@@ -56,7 +56,7 @@ namespace HMS_Phase1.Management_Classes
 
             var billsResult = context.Bills.ToList();
 
-            if (billsResult == null)
+            if (!billsResult.Any())
             {
                 Console.WriteLine("No bills available.");
                 return;

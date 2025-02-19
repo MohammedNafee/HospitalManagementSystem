@@ -56,7 +56,7 @@ namespace HMS_Phase1.Management_Classes
 
             var appointmentsList = context.Appointments.ToList();
 
-            if (appointmentsList == null)
+            if (!appointmentsList.Any())
             {
                 Console.WriteLine("No appointments availabe.");
                 return;

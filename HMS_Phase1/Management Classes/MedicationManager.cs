@@ -52,7 +52,7 @@ namespace HMS_Phase1.Management_Classes
 
             var medicationsResult = context.Medications.ToList();
 
-            if (medicationsResult == null)
+            if (!medicationsResult.Any())
             {
                 Console.WriteLine("No medications available.");
                 return;

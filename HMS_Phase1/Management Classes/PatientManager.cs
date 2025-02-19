@@ -71,7 +71,7 @@ namespace HMS_Phase1.Management_Classes
 
             var patientsList = context.Patients.ToList();
 
-            if (patientsList == null)
+            if (!patientsList.Any())
             {
                 Console.WriteLine("No patients available.");
                 return;

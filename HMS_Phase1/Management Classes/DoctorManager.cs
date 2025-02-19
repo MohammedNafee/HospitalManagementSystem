@@ -74,7 +74,7 @@ namespace HMS_Phase1.Management_Classes
 
             var doctorsList = context.Doctors.ToList();
 
-            if (doctorsList == null)
+            if (!doctorsList.Any())
             {
                 Console.WriteLine("No doctors available.");
                 return;

@@ -85,7 +85,7 @@ namespace HMS_Phase1.Management_Classes
 
             var prescriptionsResult = context.Prescriptions.ToList();
 
-            if (prescriptionsResult == null)
+            if (!prescriptionsResult.Any())
             {
                 Console.WriteLine("No prescriptions available.");
                 return;
