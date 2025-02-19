@@ -26,27 +26,36 @@ namespace HMS_Phase1.Management_Classes
         }
         public void OnGenerateBill(object sender, PrescriptionEventArgs e)
         {
-            Console.WriteLine("Generating bill for the issued prescription...");
-            
-            var medication = context.Medications.FirstOrDefault(med => med.MedicationId == e.MedicationId);
+            try
+            {
+                Console.WriteLine("Generating bill for the issued prescription...");
 
-            if (medication != null)
-            { 
+                var medication = context.Medications.FirstOrDefault(med => med.MedicationId == e.MedicationId);
+
+                if (medication == null)
+                {
+                    Console.WriteLine("Error: Medication not found!");
+                    return;
+
+                }
+
                 decimal totalAmount = medication.Price;
 
                 context.Bills.Add(
 
                     new Entities.Bill(e.PrescriptionId, totalAmount, DateTime.Now, Entities.BillStatus.Unpaid)
-                
+
                     );
 
                 context.SaveChanges();
-            }
-            else
-            {
-                Console.WriteLine("Error: Medication not found!");
-            }
 
+                Console.WriteLine($"Bill generated successfully!");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while generating the bill: {ex.Message}");
+            }
         }
 
         protected override void View()
